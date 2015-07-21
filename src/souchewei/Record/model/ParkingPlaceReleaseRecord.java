@@ -11,8 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import souchewei.ChargeStandard.ChargeStrategy;
-import souchewei.ChargeStandard.DivisionTimeStrategy;
+import souchewei.ChargeStandard.model.ChargeStrategy;
+import souchewei.ChargeStandard.model.DivisionTimeStrategy;
 import souchewei.Park.model.ParkingPlace;
 import souchewei.ParkingPlaceKeeper.model.ParkingPlaceKeeper;
 import souchewei.ParkingPlaceOwner.model.ParkingPlaceOwner;
