@@ -6,7 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.LockMode;
-import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -16,14 +17,19 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 	 * Dao操作的类的类型
 	 */
 	private Class clazz = null;
-
+	
 	public BaseDaoImpl() {
 		// 获得Dao操作的类的类型
 		ParameterizedType pt = (ParameterizedType) this.getClass()
 				.getGenericSuperclass();
 		this.clazz = (Class) pt.getActualTypeArguments()[0];
 	}
-
+	
+	@Autowired
+	public void setSessionFactoryOverride(SessionFactory sessionFactory){
+		super.setSessionFactory(sessionFactory);
+	}
+	
 	// 根据主键获取实体。如果没有相应的实体，返回 null
 	public T get(Long id) {
 		return (T) getHibernateTemplate().get(clazz, id);

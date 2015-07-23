@@ -13,10 +13,12 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<context:component-scan base-package="test" />
-	
+	<context:component-scan base-package="souchewei.owner.service" />
+	<context:component-scan base-package="souchewei.owner.servlet" />
+	<context:component-scan base-package="souchewei.owner.dao" />
+
 	<context:property-placeholder location="classpath:jdbc.properties" />
-	
-	
+
 	<!-- c3p0连接池配置 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<!-- 用户名 -->
@@ -33,30 +35,36 @@
 		<!-- 初始化连接池中的连接数，取值应在minPoolSize与maxPoolSize之间，默认为3 -->
 		<property name="initialPoolSize" value="2" />
 	</bean>
-	
-	  <!-- session工厂 -->  
-    <bean id="sessionFactory"  
-        class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">  
-        <property name="dataSource">  
-            <ref bean="dataSource" />  
-        </property>  
-        <property name="configLocation" value="classpath:hibernate.cfg.xml"/>  
-        <!-- 自动扫描注解方式配置的hibernate类文件 -->  
-        <property name="packagesToScan">  
-            <list>  
-                <value>test</value>
-            </list>  
-        </property>  
-    </bean>  
-    
+
+	<!-- session工厂 -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
+		<!-- 自动扫描注解方式配置的hibernate类文件 -->
+		<property name="packagesToScan">
+			<list>
+				<value>test</value>
+				<value>souchewei</value>
+			</list>
+		</property>
+	</bean>
+
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	<tx:annotation-driven  transaction-manager="transactionManager" />
-	    
-    <!-- 应用普通类获取bean    
-    <bean id="appContext" class="com.soanl.util.tool.ApplicationUtil"/>-->  
-  
+	
+	
+	<!-- 定义 Autowired 自动注入 bean -->
+	<bean
+		class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+		
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+
+	<!-- 应用普通类获取bean <bean id="appContext" class="com.soanl.util.tool.ApplicationUtil"/> -->
+
 
 </beans>
